@@ -1,0 +1,195 @@
+:root {
+  --main-background-color: #004378;
+  --main-accent-green: #2A942D;
+  --main-accent-red: #A31110;
+  --main-accent-yellow: #FDCC19;
+  --main-accent-blue: #0980CB;
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.main-bg-color {
+  background-color: #004378;
+}
+
+.border-top-red {
+  border-top: 8px solid #A31110;
+}
+
+.border-top-blue {
+  border-top: 8px solid var(--main-accent-blue);
+}
+
+.border-top-green {
+  border-top: 8px solid var(--main-accent-green);
+}
+
+.border-top-yellow {
+  border-top: 8px solid var(--main-accent-yellow);
+}
+
+.border-bottom-red {
+    border-bottom: 0.3rem solid #A31110;
+}
+
+.border-bottom-blue {
+    border-bottom: 0.3rem solid #0980CB;
+}
+
+
+
+
+
+/*For Login and Register*/
+    #account, #registerForm {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .form-floating {
+        margin-bottom: 15px;
+    }
+
+    .form-label {
+        color: #495057;
+    }
+
+    .form-control {
+        height: calc(2.75rem + 2px);
+    }
+
+    .checkbox {
+        margin-bottom: 15px;
+    }
+
+    #login-submit, #registerSubmit {
+        margin-top: 15px;
+    }
+
+
+    a {
+        color: #007bff;
+    }
+
+    a:hover {
+        color: #0056b3;
+    }
+
+
+    #external-account {
+        margin-top: 20px;
+    }
+
+    #external-account button {
+        margin-right: 10px;
+    }
+
+    .form-check-label {
+        margin-left: 1rem;
+    }
+/*End For Login and Register*/
+
+
+/*For Footer*/
+    .social-icons li {
+        cursor: pointer;
+        font-size: 24px;
+        transition: transform 0.1s
+    }
+
+    .social-icons li:hover {
+        transform: scale(1.4);
+    }
+
+    .contact-label {
+        margin-bottom: 10px;
+    }
+
+    .input-radio {
+        margin-right: 10px;
+    }
+
+    .input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .text-danger {
+        color: #dc3545;
+    }
+
+    .footer {
+        color: #fff;
+    }
+/*End For Footer*/
+
+.carousel-caption-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 64, 114, 0.5);
+}
+
+.carousel-caption {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Subtle text shadow */
+    font: bold;
+    font-size: 2.4rem;
+}
+
+advertisement-column {
+    height: 100%;
+}
+
+
+/**/
+.custom-link {
+    text-decoration: none; 
+    color: inherit; 
+}
+
+.custom-link:hover {
+    text-decoration: underline;
+    color: #0980CB;
+}
+
+.main-events {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}

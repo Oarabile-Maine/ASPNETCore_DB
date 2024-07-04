@@ -1,0 +1,208 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using ASPNETCore_DB.Models
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
+@*@model ContactFormViewModel*@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CUT | Student Life</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ASPNETCore_DB.styles.css" asp-append-version="true" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom-red box-shadow mb-3">
+                <div class="container-fluid">
+                    <div>
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                            <img src="/assets/CUT_Logo.png" alt="CUT logo" style="max-width: 100px; height: auto;">
+                        </a>
+
+                        <p class="text-center">CUT Student Life</p>
+                    </div>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index" style="font-size: 18px; font-weight: bold;">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About" style="font-size: 18px; font-weight: bold;">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy" style="font-size: 18px; font-weight: bold;">Privacy</a>
+                            </li>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Student" asp-action="Details" style="font-size: 18px; font-weight: bold;">Your Details</a>
+                                </li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Student" asp-action="Index" style="font-size: 18px; font-weight: bold;">Students</a>
+                                    </li>
+                                }
+                                @if (User.IsInRole("User"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Student" asp-action="Create" style="font-size: 18px; font-weight: bold;">Enroll</a>
+                                    </li>
+                                }
+                                <li class="nav-item">
+                                    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                        <button id="logout" type="submit" class="btn btn-link nav-link" style="font-size: 18px; font-weight: bold;">Logout</button>
+                                    </form>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item right-align">
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Register" style="font-size: 18px; font-weight: bold;">Register</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Login" style="font-size: 18px; font-weight: bold;">Login</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            
+        </div>
+        
+    </header>
+
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <div class="container align-items-bottom">
+        <footer class="footer py-3 px-4 my-4 border-top-red main-bg-color">
+
+           
+
+                <div class="col-md-3 d-flex flex-column justify-content-center align-items-center">
+                    <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                        <img src="/assets/CUT_Logo.png" alt="CUT logo" />
+                    </a>
+
+                    <br /> <br />
+                    <h2 class="text-white fs-6">Thingking Beyond</h2>
+                </div>
+                
+
+                <div class="col-md-4 text-white d-flex flex-column justify-content-center align-items-end">
+                    <div>
+                        <h2 class="text-white">Contact Us</h2>
+                        <form class="contact-form" asp-action="Contact" asp-controller="Home" onsubmit="return updateRecipient()">
+
+                            <label class="contact-label" for="choice-bfn">
+                                <input class="input-radio" id="choice-bfn" type="radio" name="choice" value="BFN Campus" checked="checked" onchange="updateRecipient()">
+                                BFN Campus
+                            </label>
+                            <label class="contact-label" for="choice-wlk">
+                                <input class="input-radio" id="choice-wlk" type="radio" name="choice" value="WLK Campus" onchange="updateRecipient()">
+                                WLK Campus
+                            </label>
+                            <input type="hidden" id="campusEmail" name="campusEmail" value="CUTAdminBFN2024@gmail.com">
+
+                            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+
+                            <div class="input-wrap" data-validate="Name is required">
+                                <input class="input" type="text" name="name" placeholder="Your Name">
+                            </div>
+                            <div class="input-wrap" data-validate="Valid email is required: example@email.com">
+                                <input class="input" type="text" name="email" placeholder="Your Email">
+                            </div>
+                            <div class="input-wrap" data-validate="Message is required">
+                                <textarea class="input" name="message" placeholder="Your Message"></textarea>
+                            </div>
+                            <button class="btn btn-danger" type="submit">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                <div class="col-md-4 d-flex align-items-center ">
+                    @* <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                        <img src="/assets/CUT_Logo.png" alt="CUT logo" />
+                    </a> *@
+                </div>
+
+                <div class="col-md-3 d-flex flex-column justify-content-center align-items-center">
+                    <div class="text-muted">&copy; 2024 CODE&trade;</div>
+                    <div class="text-white fs-6">For: SSD316_b Grp Assignmnt 1</div>
+                </div>
+
+                <ul class="nav col-md-4 justify-content-end list-unstyled d-flex social-icons">
+                    <li class="ms-3"><a class="text-white" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                    <li class="ms-3"><a class="text-white" href="#"><i class="fab fa-twitter"></i></a></li>
+                    <li class="ms-3"><a class="text-white" href="#"><i class="fab fa-instagram"></i></a></li>
+                    <li class="ms-3"><a class="text-white" href="#"><i class="fab fa-youtube"></i></a></li>
+                    <li class="ms-3"><a class="text-white" href="#"><i class="fab fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+
+        </footer>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
+
+    <script>
+        //Custom JS for controlling carousel pause / resume
+        document.addEventListener("DOMContentLoaded", function () {
+            var myCarousel = document.getElementById('carouselExampleControls');
+            var carousel = new bootstrap.Carousel(myCarousel, {
+                interval: 3000
+            });
+
+            var pauseButton = document.querySelector('.pause-carousel');
+            pauseButton.addEventListener('click', function () {
+                if (pauseButton.getAttribute('aria-pressed') == 'false') {
+                    carousel.pause();
+
+                }
+                else {
+                    carousel.cycle();
+                }
+            } )
+
+        } )
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
